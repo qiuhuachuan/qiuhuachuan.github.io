@@ -1,25 +1,286 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qhc's blogs</title>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人学术主页</title>
     <script src="https://unpkg.com/vue@3"></script>
-</head>
-<body>
-    <div id="app">{{ message }}</div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3b82f6',
+              secondary: '#64748b',
+              dark: '#1e293b',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .sidebar-toggle {
+          transition: all 0.3s ease;
+        }
+        .sidebar {
+          transition: all 0.3s ease;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <div id="app" class="min-h-screen flex flex-col">
+      <!-- 顶部导航栏 -->
+      <header class="bg-white shadow-sm">
+        <div
+          class="container mx-auto px-4 py-4 flex justify-between items-center"
+        >
+          <h1 class="text-2xl font-bold text-dark">学术主页</h1>
+          <button
+            @click="toggleSidebar"
+            class="sidebar-toggle p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+          >
+            <i class="fa" :class="sidebarOpen ? 'fa-times' : 'fa-bars'"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- 主内容区 -->
+      <main class="flex flex-1">
+        <!-- 侧边栏 -->
+        <aside
+          class="sidebar bg-white shadow-sm w-64 fixed h-full top-0 left-0 transform -translate-x-full md:translate-x-0 z-20"
+          :class="{ 'translate-x-0': sidebarOpen }"
+        >
+          <div class="p-6">
+            <div class="flex flex-col items-center mb-8">
+              <div
+                class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-4"
+              >
+                <i class="fa fa-user text-4xl text-gray-500"></i>
+              </div>
+              <h2 class="text-xl font-semibold text-dark">姓名</h2>
+              <p class="text-secondary">职位 | 机构</p>
+            </div>
+
+            <nav class="space-y-4">
+              <a
+                href="#"
+                class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100"
+              >
+                <i class="fa fa-envelope text-primary"></i>
+                <span>邮箱</span>
+              </a>
+              <a
+                href="#"
+                class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100"
+              >
+                <i class="fa fa-github text-primary"></i>
+                <span>GitHub</span>
+              </a>
+              <a
+                href="#"
+                class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100"
+              >
+                <i class="fa fa-graduation-cap text-primary"></i>
+                <span>Google Scholar</span>
+              </a>
+              <a
+                href="#"
+                class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100"
+              >
+                <i class="fa fa-linkedin text-primary"></i>
+                <span>LinkedIn</span>
+              </a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- 遮罩层 -->
+        <div
+          v-if="sidebarOpen"
+          @click="toggleSidebar"
+          class="fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden"
+        ></div>
+
+        <!-- 正文内容 -->
+        <div class="flex-1 md:ml-64 p-6">
+          <!-- 个人介绍 -->
+          <section class="mb-12 bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold text-dark mb-4">个人介绍</h2>
+            <p class="text-gray-700 leading-relaxed">
+              我是一名研究人员，专注于人工智能、机器学习和数据科学领域的研究。我的研究兴趣包括但不限于深度学习、自然语言处理、计算机视觉和强化学习。
+              我拥有博士学位，目前在一所知名大学或研究机构工作。我发表了多篇学术论文，参与了多个研究项目，并在相关领域取得了一定的成果。
+            </p>
+          </section>
+
+          <!-- Publications -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-dark mb-6">Publications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- 论文卡片 1 -->
+              <div
+                class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center"
+              >
+                <h3 class="text-lg font-semibold text-dark mb-2">KISS</h3>
+                <p class="text-gray-600 mb-4">
+                  Keep it Simple, Stupid Agent Framework
+                </p>
+                <button
+                  class="mt-auto bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+
+              <!-- 论文卡片 2 -->
+              <div
+                class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center"
+              >
+                <div class="w-32 h-32 mb-4 flex items-center justify-center">
+                  <svg
+                    width="128"
+                    height="128"
+                    viewBox="0 0 128 128"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="64"
+                      cy="40"
+                      r="20"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                    />
+                    <circle cx="54" cy="30" r="3" fill="#3b82f6" />
+                    <circle cx="74" cy="30" r="3" fill="#3b82f6" />
+                    <path
+                      d="M44 60C44 50 54 40 64 40C74 40 84 50 84 60C84 70 74 80 64 80C54 80 44 70 44 60Z"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                    />
+                    <path
+                      d="M64 80C64 90 54 100 54 100"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M64 80C64 90 74 100 74 100"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-dark mb-2">
+                  StringSight
+                </h3>
+                <p class="text-gray-600 mb-4">
+                  Turning Model Conversations and Agentic Traces into Actionable
+                  Insights
+                </p>
+                <button
+                  class="mt-auto bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+
+              <!-- 论文卡片 3 -->
+              <div
+                class="bg-white p-6 rounded-lg shadow-sm flex flex-col items-center text-center"
+              >
+                <div class="w-32 h-32 mb-4 flex items-center justify-center">
+                  <svg
+                    width="128"
+                    height="128"
+                    viewBox="0 0 128 128"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="28"
+                      y="28"
+                      width="72"
+                      height="72"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                    />
+                    <path d="M28 52L100 52" stroke="#3b82f6" stroke-width="4" />
+                    <path d="M28 76L100 76" stroke="#3b82f6" stroke-width="4" />
+                    <circle
+                      cx="80"
+                      cy="92"
+                      r="12"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                    />
+                    <path
+                      d="M74 86L86 98"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M86 86L74 98"
+                      stroke="#3b82f6"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-dark mb-2">DS-Serve</h3>
+                <p class="text-gray-600 mb-4">
+                  A Framework for Efficient and Scalable Neural Retrieval
+                </p>
+                <button
+                  class="mt-auto bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- 页脚 -->
+      <footer class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 text-center text-gray-600">
+          <p>&copy; {{ new Date().getFullYear() }} 个人学术主页</p>
+        </div>
+      </footer>
+    </div>
 
     <script>
-    const { createApp } = Vue
+      const { createApp } = Vue;
 
-    createApp({
+      createApp({
         data() {
-        return {
-            message: 'Hello Vue!'
-        }
-        }
-    }).mount('#app')
-</script>
-</body>
+          return {
+            sidebarOpen: false,
+          };
+        },
+        methods: {
+          toggleSidebar() {
+            this.sidebarOpen = !this.sidebarOpen;
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
 </html>
